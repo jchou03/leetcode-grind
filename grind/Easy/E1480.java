@@ -1,4 +1,4 @@
-package grind;
+package grind.Easy;
 
 // Running Sum of 1d Array
 class Solution {

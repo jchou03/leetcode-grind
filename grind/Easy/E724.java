@@ -1,5 +1,6 @@
-package grind;
+package grind.Easy;
 
+// Find Pivot Index
 class E724 {
     public int pivotIndex(int[] nums) {
         int leftSum = 0;
