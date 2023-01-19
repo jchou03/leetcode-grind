@@ -1,5 +1,7 @@
 package grind.Medium;
 
+// number of islands
+
 public class M200 {
     public int numIslands(char[][] grid) {
         int count = 0;
