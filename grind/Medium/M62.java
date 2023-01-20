@@ -1,5 +1,5 @@
 package grind.Medium;
-import java.util.*;
+// import java.util.*;
 
 // Unique paths
 
@@ -18,9 +18,9 @@ public class M62 {
                 }
             }
         }
-        for(int i = 0; i < m; i++){
-            System.out.println(Arrays.toString(matrix[i]));
-        }
+        // for(int i = 0; i < m; i++){
+        //     System.out.println(Arrays.toString(matrix[i]));
+        // }
         return matrix[m-1][n-1];
     }
 }
