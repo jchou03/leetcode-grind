@@ -5,48 +5,37 @@ import java.util.*;
 
 public class M299 {
     public String getHint(String secret, String guess) {
-        // hashmap to store a set of indicies where a certain character is in secret
-        HashMap<Character, HashSet<Integer>> sMap = new HashMap<Character, HashSet<Integer>>();
-        // populate the map with the information from secret
-        for(int i = 0; i < secret.length(); i++){
-            char c = secret.charAt(i);
-            if(sMap.get(c) == null){
-                sMap.put(c, new HashSet<Integer>());
-                sMap.get(c).add(i);
-            }else{
-                sMap.get(c).add(i);
-            }
-        }
-        // have another map that stores the count of each digit in the guess
-        // iterate over the guess and store the count of each digit, but if that digit is a Bull, remove it from its respective sMap set. Then at the end, compare the count of each digit to the size of each set to get the number of Cows
-        HashMap<Character, Integer> gMap = new HashMap<Character, Integer>();
         int bullCount = 0;
-        int cowCount = 0;
-        for(int i = 0; i < guess.length(); i++){
-            char c = guess.charAt(i);
-            if(sMap.get(c) != null){
-                // if c is a possible bull or cow, check if it is a bull
-                if(sMap.get(c).contains(i)){
-                    bullCount++;
-                    sMap.get(c).remove(i);
+        // use two maps to store the count of each digit in each
+        HashMap<Character, Integer> smap = new HashMap<Character, Integer>();
+        HashMap<Character, Integer> gmap = new HashMap<Character, Integer>();
+        for(int i = 0; i < secret.length(); i++){
+            char a = secret.charAt(i);
+            char b = guess.charAt(i);
+            if(a == b){
+                bullCount++;
+            }else{
+                // update smap count
+                if(smap.get(a) == null){
+                    smap.put(a, 1);
+                }else{
+                    smap.put(a, smap.get(a) + 1);
                 }
-                // if it isn't a bull, increment the counter
-                else{
-                    if(gMap.get(c) == null){
-                        gMap.put(c, 1);
-                    }else{
-                        gMap.put(c, gMap.get(c) + 1);
-                    }
+                // update gmap count
+                if(gmap.get(b) == null){
+                    gmap.put(b, 1);
+                }else{
+                    gmap.put(b, gmap.get(b) + 1);
                 }
             }
-            // if c isn't a possible bull or cow, ignore it
         }
-        // compare the count of each digit to the size of the map for the cowCount
-        for(Character c : gMap.keySet()){
-            System.out.println(c + ": " + gMap.get(c) + ", " + sMap.get(c).size());
-            cowCount += (Math.min(gMap.get(c), sMap.get(c).size()));
+        // get count of cows
+        int cowCount = 0;
+        for(Character c : gmap.keySet()){
+            if(smap.get(c) != null){
+                cowCount += Math.min(smap.get(c), gmap.get(c));
+            }
         }
-        
-        return (bullCount + "A" + cowCount + "B");
+        return bullCount + "A" + cowCount + "B";
     }
 }
