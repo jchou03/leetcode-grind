@@ -1,43 +1,43 @@
 package grind.Medium;
+import java.util.*;
 
 // decode string
-// incomplete (currently struggling with issues on how to ensure that we are jumping to the index of the corresponding ']')
 
 public class M394 {
-    public String decodeString(String s) {
-        return helper(s, 1);
+    class Pair{
+        String s;
+        int i;
+        public Pair(String s, int i){
+            this.s = s;
+            this.i = i;
+        }
     }
-    private String helper(String s, int n){
-        // System.out.println(s + ", " + n);
-        String temp = "";
-        String result = "";
+    public String decodeString(String s) {
+        // stack which stores each "code" where further values on the stack are 
+        Stack<Pair> stack = new Stack<Pair>();
+        // final decoded resulting string
+        stack.push(new Pair("", 1));
+        // iterate over the string
         for(int i = 0; i < s.length(); i++){
-            // the case where we need to start a new case
             if(Character.isDigit(s.charAt(i))){
-                // then we must be entering another sequence
-                // System.out.println(s);
-                // System.out.println(s.substring(i, s.indexOf('[', i)));
-                // System.out.println(Integer.parseInt(s.substring(i, s.indexOf('[', i))));
-                int a = s.indexOf('[', i);
-                temp = temp + helper(s.substring(a + 1), Integer.parseInt(s.substring(i, a) ));
-                i = s.indexOf("]", i + 1);
-            }
-            // case where we are done with our current loop
-            else if (s.charAt(i) == ']'){
-                break;
-            }
-            // other case where we just add the letter
-            else {
-                temp = temp + s.charAt(i);
+                // if come across number, get the integer and then store that to the stack
+                int j = s.indexOf("[", i);
+                // System.out.println(Integer.decode(s.substring(i,j)));
+                stack.push(new Pair("", Integer.decode(s.substring(i, j))));
+                i = j;
+            } else if (s.charAt(i) == ']'){
+                // if you come across the end bracket, take the string at the top of the stack, multiply it by the int at the top of the stack, and add it to the next value on the stack
+                Pair temp = stack.pop();
+                for(int j = 0; j < temp.i; j++){
+                    stack.peek().s = stack.peek().s + temp.s;
+                }
+            } else {
+                if(s.charAt(i) != '['){
+                    // should be a normal character, then just add it to the top string in the stack
+                    stack.peek().s = stack.peek().s + s.charAt(i);
+                }
             }
         }
-        // System.out.println(temp + ", " + n);
-
-        // apply the loop
-        for(int i = 0; i < n; i++){
-            result = result + temp;
-        }
-
-        return result;
-    }    
+        return stack.pop().s;
+    }
 }
