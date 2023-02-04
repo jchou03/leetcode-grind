@@ -3,7 +3,6 @@ import java.util.*;
 
 // matching parens
 
-
 public class E20 {
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<Character>();
