@@ -2,7 +2,7 @@ package grind.Easy;
 import java.util.*;
 
 // pascals triangle
-// in progress
+// runtime: 6.58%, memory: 15.44%
 
 public class E118 {
     public List<List<Integer>> generate(int numRows) {
@@ -19,10 +19,11 @@ public class E118 {
                 res.add(row);
             }
         }
-        for(int i = 3; i < numRows; i++){
+        for(int i = 2; i < numRows; i++){
+            System.out.println(i);
             List<Integer> row = new ArrayList<Integer>(i);
             row.add(1);
-            for(int j = 1; j < i - 1; j++){
+            for(int j = 1; j < i; j++){
                 row.add(res.get(i-1).get(j) + res.get(i-1).get(j-1));
             }
             row.add(1);
