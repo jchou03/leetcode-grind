@@ -17,6 +17,7 @@ public class M1162 {
     }
 
     public int maxDistance(int[][] grid) {
+        if(!cont(grid)) return -1;
         int maxDist = 0;
         // use a loop to iterate over every square in the matrix
         for(int i = 0; i < grid.length; i++){
@@ -44,7 +45,6 @@ public class M1162 {
 
                         }
                     }
-                    return -1;
                 }
                     
             }
@@ -52,6 +52,15 @@ public class M1162 {
         
         // return max dist
         return maxDist;
+    }
+
+    private boolean cont(int[][] grid){
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
+                if(grid[i][j] == 1) return true;
+            }
+        }
+        return false;
     }
 
     private int dist(int x0, int y0, int x1, int y1){
