@@ -1,6 +1,7 @@
 package grind.Easy;
 
 // search insert position
+// runtime: 100%, memory: 73%
 
 public class E35 {
     public int searchInsert(int[] nums, int target) {
