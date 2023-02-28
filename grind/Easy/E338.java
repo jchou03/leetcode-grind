@@ -2,6 +2,8 @@ package grind.Easy;
 
 // counting bits
 // runtime: 99%, memory: 5%
+// update, it is O(1) space, and it seems that the memory efficiency of this problem is really tight, 
+// so it's probablly ok in terms of space efficiency
 
 public class E338 {
     public int[] countBits(int n) {
