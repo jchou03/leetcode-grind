@@ -32,6 +32,7 @@ public class M211 {
             if(w1.length() != w2.length()) {
                 return false;
             }
+
             for(int i = 0; i < w1.length(); i++){
                 if(!(w2.charAt(i) == '.') && w1.charAt(i) != w2.charAt(i)){
                     return false;
