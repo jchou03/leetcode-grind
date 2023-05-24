@@ -2,35 +2,27 @@ package grind.Easy;
 import java.util.*;
 
 // merge two sorted arrays
-// quite inefficient at the moment (runtime: 5%, memory: 29%)
+// big improvement - runtime: 100%, memory: 98%
 
-public class E88 {
+
+class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        // first move nums1 elements to the back
-        if(n > 0 && m > 0){
-            for(int k = m - 1; k >= 0; k--){
-                nums1[k + (nums1.length - m)] = nums1[k];
-            }
+        // use an array copy to store the first m digits of nums1
+        int[] copy = new int[m];
+        for(int i = 0; i < m; i++){
+            copy[i] = nums1[i];
         }
-        System.out.println(Arrays.toString(nums1));
-        int i = nums1.length - m;
-        int j = 0;
-        for(int k = 0; k < nums1.length; k++){
-            System.out.println(Arrays.toString(nums1));
-            if(i < nums1.length && j < n){
-                if(nums1[i] < nums2[j]){
-                    nums1[k] = nums1[i];
-                    i++;
-                }else{
-                    nums1[k] = nums2[j];
-                    j++;
-                }
-            }else if(i >= nums1.length && j < n){
-                System.out.println("gay");
-                nums1[k] = nums2[j];
-                j++;
+
+        int i1 = 0;
+        int i2 = 0;
+        while(i1 + i2 < m + n){
+            if((i2 >= n) || (i1 < m && (copy[i1] < nums2[i2]))){
+                nums1[i1 + i2] = copy[i1];
+                i1++;
+            }else{
+                nums1[i1 + i2] = nums2[i2];
+                i2++;
             }
-            System.out.println(Arrays.toString(nums1));
         }
     }
 }
