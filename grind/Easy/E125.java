@@ -1,6 +1,7 @@
 package grind.Easy;
 
-// 2 pointer palendrome solution (in progress)
+// 2 pointer palendrome solution 
+// runtime: 70%, memory: 83%
 
 class Solution {
     public boolean isPalindrome(String s) {
@@ -8,10 +9,10 @@ class Solution {
         int p1 = 0;
         int p2 = s.length() -1;
         while(p1 < p2){
-            while(p1 < s.length() && !Character.isAlphanumeric(s.charAt(p1))){
+            while(p1 < s.length() && !(Character.isAlphabetic(s.charAt(p1)) || Character.isDigit(s.charAt(p1)))){
                 p1++;
             }
-            while( p2 >= 0 && !Character.isAlphanumeric(s.charAt(p2))){
+            while( p2 >= 0 && !(Character.isAlphabetic(s.charAt(p2)) || Character.isDigit(s.charAt(p2)))){
                 p2--;
             }
             // System.out.println("p1: " + s.charAt(p1) + " p2: " + s.charAt(p2));
