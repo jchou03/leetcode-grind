@@ -1,7 +1,7 @@
 package grind.Medium;
 
 // best time to buy/sell stock 2
-// runtime: 97%, memory: 33%
+// runtime: 100%, memory: 33%
 
 class Solution {
     public int maxProfit(int[] prices) {
@@ -25,3 +25,20 @@ class Solution {
         return profit;
     }
 }
+
+// simpler solution with less variables
+/*
+ * 
+ * class Solution {
+    public int maxProfit(int[] prices) {
+        int profit = 0;
+
+        for(int i = 1; i < prices.length; i++){
+            if(prices[i - 1] < prices[i]){
+                profit += prices[i] - prices[i - 1];
+            }
+        }
+        return profit;
+    }
+}
+ */
