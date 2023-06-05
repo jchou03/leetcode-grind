@@ -1,6 +1,7 @@
 package grind.need_improvement;
 
 // jump game 2 (find the minimum number of jumps to reach the end of an array)
+// runtime: 31%, memory: 9% (probably can improve by not using the max integer)
 
 class Solution {
     public int jump(int[] nums) {
@@ -12,16 +13,18 @@ class Solution {
             if(i + nums[i] >= nums.length - 1){
                 nums[i] = 1;
             }else{
-                int min = Integer.MAX_VALUE;
-                for(int j = 0; i + j < (Math.min(i + nums[i], nums.length)); j++){
+                int min = Integer.MAX_VALUE - 1;
+                for(int j = 1; i + j < (Math.min(i + nums[i] + 1, nums.length)); j++){
+                    // System.out.println("i: " + i + " i + j: " + (i + j));
                     if(nums[i + j] < min){
                         min = nums[i + j];
                     }
-                    nums[i] = min + 1;
+                    // System.out.println("min: " + min);
                 }
+                nums[i] = min + 1;
             }
         }
-        System.out.println(Arrays.toString(nums));
+        // System.out.println(Arrays.toString(nums));
         return nums[0];
     }
 }
