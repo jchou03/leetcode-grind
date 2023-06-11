@@ -1,4 +1,4 @@
-import java.util.Stack;
+// https://guides.codepath.org/compsci/Valid-Palindrome
 
 public class Palindrome {
     public static void main(String[] args){

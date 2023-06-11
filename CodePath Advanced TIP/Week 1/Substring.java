@@ -1,4 +1,4 @@
-// package CodePath Advanced TIP.Week 1;
+// https://guides.codepath.org/compsci/Substring
 
 public class Substring {
     public static void main(String[] args) {
