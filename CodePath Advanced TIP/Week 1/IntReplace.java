@@ -8,10 +8,11 @@
  *       25 -> 26 -> 13 -> 14 -> 16
  * 
  * potential solution: create an array of the number of steps it takes from each step
+ * runtime: O(n)
+ * memory: O(n)
  */
 
 import java.util.Arrays;
-
 
 // if positive integer i is even, i/2, else i + 1 or i - 1 (how many steps until you reach 1)
 
@@ -26,6 +27,7 @@ public class IntReplace {
     }
 
     // powers of 2 are really powerful (less operations)
+    
     private static int intReplace(int i){
         if(i == 1) return 0;
         if(i <= 0) return -1; // (all inputs need to be positive integers)
