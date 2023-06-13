@@ -76,10 +76,11 @@ public class CanIWin {
                             map.put(stateString, true);
                             state[i] = true;
                             return true;
-                        }else{
-                            // System.out.printf("state: %s and this is a losing position\n", Arrays.toString(state));
-                            map.put(stateString, false);
                         }
+                        // else{
+                        //     // System.out.printf("state: %s and this is a losing position\n", Arrays.toString(state));
+                        //     map.put(stateString, false);
+                        // }
 
                         state[i] = true;
                     }
