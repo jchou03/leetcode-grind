@@ -22,6 +22,26 @@ public class E141 {
 }
 
 /*
+Alternative solution that uses O(1) memory 
+2 pointer solution
+    - use a fast pointer & slow pointer (if fast pointer crosses paths with slow pointer) there needs to be a loop
+
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if(head == null) return false;
+        ListNode fp = head.next;
+        ListNode sp = head;
+        while(fp != null && fp.next != null){
+            if(fp == sp || fp.next == sp) return true;
+            fp = fp.next.next;
+            sp = sp.next;
+        }
+        return false;
+    }
+}
+ */
+
+/*
 Understand:
     - we are given the head of a linked list
     - need to determine if there is a loop within the linked list
