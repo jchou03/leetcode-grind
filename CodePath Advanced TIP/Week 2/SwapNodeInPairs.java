@@ -53,6 +53,7 @@ public class SwapNodeInPairs {
         Review:
 
         Examine:
-
+            runtime: O(n)
+            memory: O(1)
      */
 }
