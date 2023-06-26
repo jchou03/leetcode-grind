@@ -27,6 +27,9 @@ Plan:
         - if the next character is the same as char at index i, increment, but if it is different, reduce temp_k by 1
     - return the max length the window reaches
 
+Examine:
+    - runtime: O(n * k)
+    - memory: O(1)
 
 */
 
@@ -47,6 +50,8 @@ public class LongestCharacterReplacement {
         int maxSize = Math.min(s.length(), 1 + k);
         int temp_k;
         for(int i = 0; i < s.length(); i++){
+            // in the case where the max size is larger than the remaining string, we can break out of the loop
+            if(maxSize > s.length() - i) break;
             temp_k = k;
             int j = i + 1;
             while(temp_k >= 0 && j < s.length()){
@@ -59,6 +64,5 @@ public class LongestCharacterReplacement {
             if(maxSize < (j - i)) maxSize = j - i;
         }
         return maxSize;
-
     }
 }
