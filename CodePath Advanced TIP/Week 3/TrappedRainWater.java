@@ -26,6 +26,8 @@ Implement
 Review
 
 Examine
+    - runtime: O(n)
+    - memory: O(1)
 
  */
 public class TrappedRainWater {
