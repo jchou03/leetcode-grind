@@ -34,6 +34,10 @@ Review
 Evaluate
     runtime: O(n)
     memory: O(n)
+    
+    leetcode performance
+        runtime: 52%
+        memory: 72%
  */
 
 import java.util.*;

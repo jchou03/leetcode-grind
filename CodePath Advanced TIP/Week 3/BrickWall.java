@@ -26,6 +26,9 @@ Review
 Examine
     - runtime: O(n * m) (where m is the average number of bricks in the wall)
     - memory: O(m) (where m is the average number of bricks in the wall)
+    leetcode performance: 
+        runtime: 48%
+        memory: 46%
 
  */
 
