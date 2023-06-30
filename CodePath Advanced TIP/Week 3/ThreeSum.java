@@ -23,6 +23,8 @@ Plan:
         - use a hashmap to look for the remaining numbers
         - O(n^2) solution
 
+    - there is a O(nlogn) solution that is O(n) after sorting by using a 2 pointer sliding window solution
+    - try implementing
  */
 
 import java.util.*;
