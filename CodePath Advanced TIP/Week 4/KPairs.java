@@ -58,6 +58,9 @@ public class KPairs {
             pair.add(min[0] - nums2[min[1]]);
             pair.add(nums2[min[1]]);
             res.add(pair);
+            if(min[1] + 1 < nums2.length){
+                queue.add(new int[]{min[0] - nums2[min[1]] + nums2[min[1] + 1], min[1] + 1});                
+            }
             k--;
         }
         return res;
