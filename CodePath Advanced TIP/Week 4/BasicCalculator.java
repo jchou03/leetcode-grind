@@ -40,7 +40,21 @@ plan
 
  */
 public class BasicCalculator {
-    public int calculate(String s){
+    public static void main(String[] args){
+        String[] tests = new String[]{
+            "1 + 1",
+            "2 - 1 + 2",
+            "(1+(4+5+2)-3)+(6+8)"
+        };
+        int[] answers = new int[]{2,3,23};
+        for(int i = 0; i < tests.length; i++){
+            System.out.printf("Beginning test %d\n", i+1);
+            int res = calculate(tests[i]);
+            System.out.printf("Test %s res: %d answer: %d\n\n", (res == answers[i] ? "Passed" : "Failed"), res, answers[i]);
+        }
+    }
+
+    public static int calculate(String s){
         int res = 0;
         int curNum = 0;
         boolean adding = true; // boolean to represent whether we are adding or subtracting
