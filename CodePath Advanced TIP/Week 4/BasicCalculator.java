@@ -38,6 +38,8 @@ plan
             - if the character is a function sign, then store the function sign
         - split into res, function, and num and execute function
 
+        try implementing a solution using a stack?
+
  */
 public class BasicCalculator {
     public static void main(String[] args){
