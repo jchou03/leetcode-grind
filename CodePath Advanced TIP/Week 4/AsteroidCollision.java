@@ -59,11 +59,11 @@ public class AsteroidCollision {
         int cur;
         for(int i = 0; i < asteroids.length; i++){
             cur = asteroids[i];
-            if(stack.isEmpty() || stack.peek() < 0){
+            if(stack.isEmpty() || stack.peek() < 0 || Math.signum(cur) == Math.signum(stack.peek())){
                 stack.push(cur);
             }else if (cur < 0){
                 while(!stack.isEmpty() && 0 <= stack.peek() && Math.abs(cur) > Math.abs(stack.peek())){
-                    stack.pop();
+                    System.out.println(stack.pop());
                 }
                 // check if we need to destroy both
                 if(!stack.isEmpty() && stack.peek() == -cur){
