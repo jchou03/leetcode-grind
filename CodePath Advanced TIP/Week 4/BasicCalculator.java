@@ -42,8 +42,8 @@ plan
 public class BasicCalculator {
     public static void main(String[] args){
         String[] tests = new String[]{
-            "1 + 1",
-            "2 - 1 + 2",
+            "1+1",
+            "2 - 1 + 2 ",
             "(1+(4+5+2)-3)+(6+8)"
         };
         int[] answers = new int[]{2,3,23};
@@ -60,29 +60,39 @@ public class BasicCalculator {
         boolean adding = true; // boolean to represent whether we are adding or subtracting
         for(int i = 0; i < s.length(); i++){
             char c = s.charAt(i);
-            if(c == '('){
-                int left = s.indexOf('(', i + 1);
-                int right = s.indexOf(')', i + 1);
-                while(left != -1 && left < right){
-                    left = s.indexOf('(', left + 1);
-                    right = s.indexOf(')', right + 1);
-                }
-                curNum = calculate(s.substring(left + 1, right));
-                i = right; // (then i++ at the end of the loop)
-            }else if(Character.isDigit(c)){
+            if(Character.isDigit(c)){
                 curNum = (curNum * 10) + Character.digit(c, 10);
-            }else if(c == '+'){
-                adding = true;
-            }else if(c == '-'){
-                adding = false;
-            }else if(c == ' '){
+            }else{
+                if(c == '('){
+                    int left = s.indexOf('(', i + 1);
+                    int right = s.indexOf(')', i + 1);
+                    while(left != -1 && left < right){
+                        left = s.indexOf('(', left + 1);
+                        right = s.indexOf(')', right + 1);
+                    }
+                    curNum = calculate(s.substring(i + 1, right));
+                    i = right; // (then i++ at the end of the loop)
+                }else if(c == '+'){
+                    adding = true;
+                }else if(c == '-'){
+                    adding = false;
+                }
                 if(adding){
                     res += curNum;
                 }else{
                     res -= curNum;
                 }
                 curNum = 0;
-            }
+                
+            }            
+        }
+        if(curNum != 0){
+            if(adding){
+                    res += curNum;
+                }else{
+                    res -= curNum;
+                }
+                curNum = 0;
         }
         return res;
     }
