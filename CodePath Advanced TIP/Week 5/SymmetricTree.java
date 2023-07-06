@@ -40,35 +40,51 @@ import java.util.*;
        }
     }
 
+    // try recursive solution by checking each subtree for symmetry
     public boolean isSymmetric(TreeNode root){
-        // case of only root node
-        if(root.left == null && root.right == null) return true;
-        Queue<TreeNode> lq = new LinkedList<TreeNode>();
-        Queue<TreeNode> rq = new LinkedList<TreeNode>();
-        TreeNode left;
-        TreeNode right;
-        lq.add(root.left);
-        rq.add(root.right);
-        
-        while(!lq.isEmpty() && !rq.isEmpty()){
-            left = lq.poll();
-            right = rq.poll();
-            if((left == null && right !=null) || (right == null && left != null)) return false;
-            if(left != null && right != null && left.val != right.val){
-                return false;
-            }
-            if(left != null){
-                lq.add(left.left);
-                lq.add(left.right);
-            }
-            if(right != null){
-                rq.add(right.right);
-                rq.add(right.left);
-            }
-        }
-
-        if(lq.size() != rq.size()) return false;
-
-        return true;
+        return helper(root.left, root.right);
     }
+    private boolean helper(TreeNode l, TreeNode r){
+        if(l == null && r == null){
+            return true;
+        }else if(l == null || r == null){
+            return false;
+        }else{
+            return l.val == r.val && helper(l.left, r.right) && helper(l.right, r.left);
+        }
+    }
+
+
+
+    // public boolean isSymmetric(TreeNode root){
+    //     // case of only root node
+    //     if(root.left == null && root.right == null) return true;
+    //     Queue<TreeNode> lq = new LinkedList<TreeNode>();
+    //     Queue<TreeNode> rq = new LinkedList<TreeNode>();
+    //     TreeNode left;
+    //     TreeNode right;
+    //     lq.add(root.left);
+    //     rq.add(root.right);
+        
+    //     while(!lq.isEmpty() && !rq.isEmpty()){
+    //         left = lq.poll();
+    //         right = rq.poll();
+    //         if((left == null && right !=null) || (right == null && left != null)) return false;
+    //         if(left != null && right != null && left.val != right.val){
+    //             return false;
+    //         }
+    //         if(left != null){
+    //             lq.add(left.left);
+    //             lq.add(left.right);
+    //         }
+    //         if(right != null){
+    //             rq.add(right.right);
+    //             rq.add(right.left);
+    //         }
+    //     }
+
+    //     if(lq.size() != rq.size()) return false;
+
+    //     return true;
+    // }
 }
