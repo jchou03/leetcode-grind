@@ -10,6 +10,11 @@ Match
 Plan
     - implement BFS with a queue (using null value to check between levels)
 
+Examine
+    O(n) solution
+    runtime: 99%
+    memory: 98%
+
  */
 import java.util.*;
 public class MinimumDepth {
@@ -30,13 +35,22 @@ public class MinimumDepth {
         Queue<TreeNode> nextLevel = new LinkedList<TreeNode>();
         TreeNode cur;
         int level = 0;
+        if(root != null){
+            curLevel.add(root);
+            level++;
+        } 
         while(!curLevel.isEmpty() || !nextLevel.isEmpty()){
             while(!curLevel.isEmpty()){
                 cur = curLevel.poll();
-                if(cur == null) return level - 1;
-                nextLevel.add(cur.left);
-                nextLevel.add(cur.right);
+                if(cur != null){
+                    if(cur.left == null && cur.right == null){
+                        return level;
+                    }
+                    if(cur.left != null) nextLevel.add(cur.left);
+                    if(cur.right != null) nextLevel.add(cur.right);
+                }
             }
+            // System.out.println("level complete: " + level);
             level++;
             curLevel = nextLevel;
             nextLevel = new LinkedList<TreeNode>();
