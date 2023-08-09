@@ -14,17 +14,27 @@ public class M380 {
         }
         
         public boolean insert(int val) {
-            ar.add(val);
-            return set.add(val);
+            if(set.add(val)){
+                return ar.add(val);
+            }else{
+                return false;
+            }
         }
         
         public boolean remove(int val) {
-            ar.remove((Integer)val);
-            return set.remove(val);
+            return ar.remove((Integer)val) && set.remove((Integer)val);
         }
         
         public int getRandom() {
             return ar.get((int)(Math.random() * set.size()));
         }
     }
+    
+    /**
+     * Your RandomizedSet object will be instantiated and called as such:
+     * RandomizedSet obj = new RandomizedSet();
+     * boolean param_1 = obj.insert(val);
+     * boolean param_2 = obj.remove(val);
+     * int param_3 = obj.getRandom();
+     */
 }
