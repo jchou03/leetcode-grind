@@ -3,6 +3,16 @@ package grind.Hard;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/*
+ * find the maximum amount of water that can be trapped within a shape
+ * use a 2 pointer solution 
+ *  - keep track of a left and right pointer, and the maximum height on each side
+ *  - move the pointer on the side with the lower max height toward the center (since we have a potential to trap rainwater between the max heights)
+ *      - if the pointer is a new max height for the side, update the max height on that side
+ *      - else we are in an area that can trap water, so get the water above the current index and add it to the total
+ *  - return total 
+ */
+
 public class H42 {
     public static void main(String[] args){
         int[][] tests = new int[][]{
@@ -19,46 +29,27 @@ public class H42 {
 
 
     public static int trap(int[] height) {
-        // construct an array that stores the positions of blocks on each row
-        int max = height[0];
-        int secondMax = 0;
-        for(int i = 1; i < height.length; i++){
-            if(height[i] > max){
-                secondMax = max;
-                max = height[i];
-            }else if(height[i] != max && height[i] > secondMax){
-                secondMax = height[i];
-            }
-        }
-        System.out.println(secondMax);
-
-        ArrayList<ArrayList<Integer>> blocks = new ArrayList<ArrayList<Integer>>(secondMax);
-        System.out.println(blocks.size());
-        for(int i = 0; i < height.length; i++){
-            for(int j = 0; j < height[i]; j++){
-                if(j < blocks.size()){
-                    blocks.get(j).add(i);
-                    System.out.println("adding to existing list: " + blocks.get(j));
-                }else{
-                    ArrayList<Integer> list = new ArrayList<Integer>();
-                    list.add(i);
-                    blocks.add(j, list);
-                    System.out.println("creating a new list:" + list);
-                }
-            }
-        }
-
-        System.out.println(blocks);
-
+        int left = 0;
+        int leftMax = height[0];
+        int right = height.length - 1;
+        int rightMax = height[height.length - 1];
         int trappedRainWater = 0;
-        for(ArrayList<Integer> list: blocks){
-            if(!list.isEmpty()){
-                int prev = list.get(0);
-                for(int i = 1; i < list.size(); i++){
-                    if(list.get(i) - 1 > prev){
-                        trappedRainWater += (list.get(i) - prev) - 1;
-                    }
-                    prev = list.get(i);
+        while(left < right){
+            if(leftMax < rightMax){
+                // System.out.println("left: " + left);
+                left++;
+                if(height[left] > leftMax){
+                    leftMax = height[left];
+                }else{
+                    trappedRainWater += leftMax - height[left];
+                }
+            }else{
+                // System.out.println("right: " + right);
+                right--;
+                if(height[right] > rightMax){
+                    rightMax = height[right];
+                }else{
+                    trappedRainWater += rightMax - height[right];
                 }
             }
         }
