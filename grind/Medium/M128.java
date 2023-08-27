@@ -42,7 +42,7 @@ public class M128 {
                     // need to update underlying references for the greater values
                     Set<Integer> set = map.get(nums[i]);
                     set.addAll(map.get(nums[i] + 1));
-                    int j = i + 1;
+                    int j = nums[i] + 1;
                     while(map.containsKey(j)){
                         map.put(j, set);
                         j++;
