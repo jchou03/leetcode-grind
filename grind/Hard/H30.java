@@ -19,15 +19,26 @@ plan:
     - if it is a concatinated substring, add index to list
 
 - return list of results
+
+- runtime: 71%, memory: 31%
 */
 
 public class H30 {
     public List<Integer> findSubstring(String s, String[] words) {
-        List<Integer> res = new ArrayList<Integer>();
+        System.out.println(s.length());
+        System.out.println(words.length);
+        ArrayList<Integer> res = new ArrayList<Integer>();
         int wordLen = words[0].length();
         int length = words.length * wordLen;
         for(int i = 0; i < s.length() - length + 1; i++){
-            if(isConcatenatedSubstring(s, words, i)){
+            if(!res.isEmpty() && res.get(res.size() - 1) == i - wordLen && i + length + wordLen <= s.length()){
+                System.out.println("i: " + i);
+                System.out.println(s.substring(i - wordLen, i));
+                System.out.println(s.substring(i + length - wordLen, i + length));
+                if(s.substring(i - wordLen, i).equals(s.substring(i + length - wordLen, i + length))){
+                    res.add(i);
+                }
+            }else if(isConcatenatedSubstring(s, words, i)){
                 res.add(i);
             }
         }
