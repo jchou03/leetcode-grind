@@ -23,40 +23,28 @@ public class M128 {
             - create a hashmap that stores the number that it's looking for with a set that stores all of the numbers within it
                 - since set is same underlying object, new additions are added to the same set
                 - then check for set size and get max
+                - this still has the issue of setting the set objects for all the upcoming values
+        alternate alternate plan:
+            - store all values in a set and iterate over the set (since it's O(1) to check if value is within the set)
+            - then iterate over set until you find one at the start of a sequence (the num - 1 doesn't exist within the set)
+                - once you find a start, you iterate over numbers in set to count length of sequence
         */
-        HashMap<Integer, Set<Integer>> map = new HashMap<Integer, Set<Integer>>();
-        int maxSeq = 0;
+        Set<Integer> set = new HashSet<Integer>(nums.length);
         for(int i = 0; i < nums.length; i++){
-            if(!map.containsKey(nums[i] - 1) && !map.containsKey(nums[i] + 1)){
-                Set<Integer> set = new HashSet<Integer>();
-                set.add(nums[i]);
-                map.put(nums[i], set);
-            }
-            if(map.containsKey(nums[i] - 1)){
-                Set<Integer> set = map.get(nums[i] - 1);
-                set.add(nums[i]);
-                map.put(nums[i], set);
-            }
-            if(map.containsKey(nums[i] + 1)){
-                if(map.containsKey(nums[i])){
-                    // need to update underlying references for the greater values
-                    Set<Integer> set = map.get(nums[i]);
-                    set.addAll(map.get(nums[i] + 1));
-                    int j = nums[i] + 1;
-                    while(map.containsKey(j)){
-                        map.put(j, set);
-                        j++;
-                    }
-                }else{
-                    Set<Integer> set = map.get(nums[i] + 1);
-                    set.add(nums[i]);
-                    map.put(nums[i], set);
-                }
-            }
+            set.add(nums[i]);
         }
-
-        for(Map.Entry<Integer, Set<Integer>> entry : map.entrySet()){
-            maxSeq = Math.max(entry.getValue().size(), maxSeq);
+        int maxSeq = 0;
+        for(Integer n : set){
+            // check if this is the start of a sequence
+            if(!set.contains(n - 1)){
+                int count = 1;
+                int j = n + 1;
+                while(set.contains(j)){
+                    count++;
+                    j++;
+                }
+                maxSeq = Math.max(maxSeq, count);
+            }
         }
         return maxSeq;
     }
