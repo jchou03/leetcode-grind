@@ -12,13 +12,54 @@ describe:
 plan:
 - check if s.length() >= t.length(), if not, return ""
 - use left and right pointer using map to keep track of characters within the window
-
-
-runtime: 5%, memory: 6%
-
 */
 
 public class H76 {
+    // runtime: 76%, memory: 93%
+    public String minWindowBetter(String s, String t) {
+        if(s == "" || s == null || t == "" || t == null){
+            return "";
+        }
+
+        int n = s.length(), m = t.length();
+
+        // keep track of the characters needed to contain t
+        int[] map = new int[128];
+
+        for(int i = 0; i < m; i++){
+            map[t.charAt(i)]++;
+        }
+
+        int l = 0, r = 0, count = m, minWindow = Integer.MAX_VALUE, minStart = 0;
+
+        while(r < n){
+            char c = s.charAt(r);
+            // System.out.printf("l: %d, r: %d, count: %d\n", l, r, count);
+
+            // if this character still needs to be filled, update the count
+            if(map[c]-- > 0){
+                count--;
+            }
+            while(count <= 0){
+                // System.out.printf("l: %d, r: %d, count: %d\n", l, r, count);
+                if((r - l + 1) < minWindow){
+                    minWindow = r - l + 1;
+                    minStart = l;
+                }
+                char lc = s.charAt(l);
+                map[lc]++;
+                l++;
+                if(map[lc] > 0){
+                    count++;
+                }
+            }
+            r++;
+        }
+
+        return minWindow == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minWindow);
+    }
+
+    // runtime: 5%, memory: 6%
     public String minWindow(String s, String t) {
         if(s.length() < t.length()){
             return "";
