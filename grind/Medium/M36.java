@@ -17,6 +17,27 @@ plan:
 */
 
 public class M36 {
+    public boolean betterIsValidSudoku(char[][] board) {
+        HashSet<String> set = new HashSet<String>();
+
+        for(int r = 0; r < board.length; r++){
+            for(int c = 0; c < board[0].length; c++){
+                char ch = board[r][c];
+                if(ch != '.'){
+                    String row = "(" + ch + ")" + r;
+                    String col = c + "(" + ch + ")";
+                    String group = (r/3) + "(" + ch + ")" + (c/3);
+
+                    if(!(set.add(row) && set.add(col) && set.add(group))){
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     public boolean isValidSudoku(char[][] board) {
         ArrayList<HashSet<Integer>> rows = new ArrayList<HashSet<Integer>>(9);
         ArrayList<HashSet<Integer>> cols = new ArrayList<HashSet<Integer>>(9);
