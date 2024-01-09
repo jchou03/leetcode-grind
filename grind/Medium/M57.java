@@ -5,28 +5,22 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /*
- * 
- * understand:
-- given an array of intervals
-- intervals[i] = [start_i, end_i]
-- no guarantee on order
-- return array of non-overlapping intervals that cover all intervals in the input
-    - can create new intervals that combine overlapping ones
-- can an interval ever have an end that comes before the start? (error detection)
-- does the endpoint on each interval get considered as part of the interval? 
-    - yes, [1,4] and [4,5] are considered overlapping
-- empty input?
+understand:
+- given array of intervals that are non-overlapping
+- need insert a new interval into intervals
+    - merge overlapping intervals
+- return array of intervals
 
 plan:
-- sort intervals by start time
-- keep track of the earliest start time that isn't yet part of the solution
-    - iterate over intervals coming after that overlap
-    - keep track of the latest end that is part of the same overlapping interval
-    - once you find an interval start that doesn't overlap (isn't part of the same interval), add old one to solution and repeat
+- sort intervals by start (nvm intervals already sorted by start)
+- iterate over intervals
+    2 cases:
+        - need to merge (then find first interval which overlaps)
+        - just need to insert (find first interval which comes after inserted interval)
 
-O(nlogn) 96%
-memory: O(n) 15%
- */
+runtime: 99%, memory: 24%
+*/
+
 
 public class M57 {
     public int[][] merge(int[][] intervals) {
@@ -65,5 +59,41 @@ public class M57 {
         public int compare(int[] a, int[] b){
             return a[0] - b[0];
         }
+    }
+
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        int startIndex = intervals.length;
+        int minStart = newInterval[0];
+        int maxEnd = newInterval[1];
+        int afterIndex = intervals.length;
+        for(int i = 0; i < intervals.length; i++){
+            int[] cur = intervals[i];
+            if(cur[0] > newInterval[1]){
+                afterIndex = i;
+                // case where there is no overlap, inserted position must be in index before i
+                if(startIndex == intervals.length){
+                    startIndex = i;
+                }
+                break;
+            }else if(cur[1] >= newInterval[0]){
+                minStart = Math.min(minStart, cur[0]);
+                maxEnd = Math.max(maxEnd, cur[1]);
+                if(startIndex == intervals.length){
+                    startIndex = i;
+                }
+            }
+        }
+
+        int[][] res = new int[intervals.length + 1 - (afterIndex - startIndex)][];
+        for(int i = 0; i < startIndex; i++){
+            res[i] = intervals[i];
+        }
+        res[startIndex] = new int[]{minStart, maxEnd};
+        // System.out.println(Arrays.toString(res[startIndex]));
+        for(int i = afterIndex; i < intervals.length; i++){
+            res[startIndex + 1 + (i - afterIndex)] = intervals[i];
+        }
+
+        return res;
     }
 }
