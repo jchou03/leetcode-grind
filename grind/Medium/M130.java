@@ -12,59 +12,41 @@ understand:
     - no return value, but need to update 
 
 plan:
-- iterate through the board until you find an 'O'
-- use BFS to explore the neighboring 'O' and store in a list (or other data structure)
-- if the full region is not touching border, then replace all regions with 'X'
+- explore the border
+    - run DFS on each square to mark the "edge zones"
+- iterate through the entire board and change the marked "O"
+    - change all unmarked "O"s into "X"
 
 */
 
 public class M130 {
     public void solve(char[][] board) {
-        HashSet<Coord> visited = new HashSet<Coord>();
-        // ignore checking for border
-        for(int i = 1; i < board.length - 1; i++){
-            for(int j = 1; j < board[0].length - 1; j++){
-                // if coord is 'O' run DFS to explore all relevant coords
-                if(board[i][j] == 'O' && !visited.contains(new Coord(i, j))){
-                    Queue<Coord> q = new LinkedList<Coord>();
-                    HashSet<Coord> coords = new HashSet<Coord>();
-                    boolean border = false;
-
-                    q.offer(new Coord(i, j));
-                    
-                    while(!q.isEmpty()){
-                        Coord cur = q.poll();
-                        if(!coords.contains(cur)) coords.add(cur);
-                        if(cur.r == 0 || cur.r == board.length - 1 || cur.c == 0 || cur.c == board[0].length) border = true;
-                        // top
-                        if(cur.r - 1 >= 0) q.offer(new Coord(cur.r - 1, cur.c));
-                        // left
-                        if(cur.c - 1 >= 0) q.offer(new Coord(cur.r, cur.c - 1));
-                        // right
-                        if(cur.c + 1 < board[0].length) q.offer(new Coord(cur.r, cur.c + 1));
-                        // bot
-                        if(cur.r + 1 < board.length) q.offer(new Coord(cur.r + 1, cur.c));
-                    }
-
-                    // either flip the characters or add to visited
-                    if(border){
-                        visited.addAll(coords);
-                    }else{
-                        for(Coord c : coords){
-                            board[c.r][c.c] = 'X';
-                        }
-                    }
+        for(int i = 0; i < board.length; i++){
+            dfs(board, i, 0);
+            dfs(board, i, board[0].length - 1);
+        }
+        for(int i = 0; i < board[0].length; i++){
+            dfs(board, 0, i);
+            dfs(board, board.length - 1, i);
+        }
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board[0].length; j++){
+                if(board[i][j] == 'M'){
+                    board[i][j] = 'O';
+                }else{
+                    board[i][j] = 'X';
                 }
             }
         }
     }
 
-    class Coord{
-        int r;
-        int c;
-        public Coord(int r, int c){
-            this.r = r;
-            this.c = c;
-        }
+    private void dfs(char[][] board, int r, int c){
+        if(r < 0 || c < 0 || r >= board.length || c >= board[0].length || board[r][c] == 'X' || board[r][c] == 'M') return;
+        // apply mark
+        board[r][c] = 'M';
+        dfs(board, r-1, c);
+        dfs(board, r+1, c);
+        dfs(board, r, c-1);
+        dfs(board, r, c+1);
     }
 }
