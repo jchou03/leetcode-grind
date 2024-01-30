@@ -12,13 +12,11 @@ public class M49 {
         // hash the arrays (as a string) and add them into a list
         HashMap<String, List<String>> map = new HashMap<String, List<String>>();
         for(int i = 0; i < strs.length; i++){
-            int[] representation = new int[26];
-            for(int j = 0; j < strs[i].length(); j++){
-                char c = strs[i].charAt(j);
-                representation[c - 'a']++;
-            }
+            char[] representation = strs[i].toCharArray();
+            Arrays.sort(representation);
 
-            String s = Arrays.toString(representation);
+            String s = new String(representation);
+
             if(map.containsKey(s)){
                 map.get(s).add(strs[i]);
             }else{
