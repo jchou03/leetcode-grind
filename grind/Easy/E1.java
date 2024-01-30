@@ -16,4 +16,19 @@ public class E1 {
         }
         return null;
     }
+
+    /*
+     * public int[] twoSum(int[] nums, int target) {
+        // use a hashmap to store the different potential sums needed
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for(int i = 0; i < nums.length; i++){
+            if(map.containsKey(nums[i])){
+               return new int[]{i, map.get(nums[i])}; 
+            }else{
+                map.put(target - nums[i], i);
+            }
+        }
+        return new int[]{};
+    }
+     */
 }
