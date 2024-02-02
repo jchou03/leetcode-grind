@@ -48,4 +48,44 @@ public class M128 {
         }
         return maxSeq;
     }
+
+    /*
+    public int longestConsecutive(int[] nums) {
+        // iterate over nums list
+        // use set to keep track of unique values
+        // use visitedSet to keep track of unique values visited
+        // iterate over uniqueSet and count max interval
+        HashSet<Integer> uniqueSet = new HashSet<Integer>();
+        HashSet<Integer> visitedSet = new HashSet<Integer>();
+
+        for(int i = 0; i < nums.length; i++){
+            uniqueSet.add(nums[i]);
+        }
+
+        int longestConsecutive = 0;
+        System.out.println(uniqueSet);
+
+        for(Integer i : uniqueSet){
+            int curConsecutive = 1;
+            int j = 1;
+            // System.out.println("\n Starting new iteration on: " + i);
+            visitedSet.add(i);
+            while(uniqueSet.contains(i - j) && !visitedSet.contains(i - j)){
+                visitedSet.add(i - j);
+                curConsecutive++;
+                j++;
+            }
+            j = 1;
+            while(uniqueSet.contains(i + j) && !visitedSet.contains(i + j)){
+                visitedSet.add(i + j);
+                curConsecutive++;
+                j++;
+            }
+            // System.out.println(visitedSet);
+            // System.out.println(curConsecutive);
+            longestConsecutive = Math.max(longestConsecutive, curConsecutive);
+        }
+        return longestConsecutive;
+    }
+     */
 }
