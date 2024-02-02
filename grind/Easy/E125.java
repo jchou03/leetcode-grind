@@ -1,7 +1,7 @@
 package grind.Easy;
 
 // 2 pointer palendrome solution 
-// runtime: 70%, memory: 83%
+// runtime: 70%, memory: 83% (resolved)
 
 class Solution {
     public boolean isPalindrome(String s) {
