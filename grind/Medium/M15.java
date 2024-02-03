@@ -6,45 +6,49 @@ import java.util.List;
 
 /*
  * Threesum
+ * 
+ * sort the list and iterate over each num to find 2 other nums that sum to 0
+ *  use 2 pointers to identify numbers that sum with curNum to 0
+ * 
+ * runtime: 53%, memory: 52%
  */
 
 public class M15 {
     public List<List<Integer>> threeSum(int[] nums) {
         // first sort nums (ascending to descending)
-        // use 2 pointers starting from left and right end of array
-        // iterate over nums between the left and right pointer to look for a solution which sums to 0
-        // move the pointer that has a larger absolute value toward the middle
+        // iterate over the array
+            // for each number, identify 2 other numbers that would combine with current num to sum to 0
+            // create left and right pointer on edges of remaining array (to left of current num)
+            // if sum is > 0, decrease right pointer, if < 0, increase left pointer
 
         Arrays.sort(nums);
-
-        int left = 0;
-        int right = nums.length - 1;
+        System.out.println(Arrays.toString(nums));
 
         ArrayList<List<Integer>> res = new ArrayList<List<Integer>>();
 
-        while(left + 2 <= right){
-            for(int i = left + 1; i < right; i++){
-                if(nums[left] + nums[i] + nums[right] == 0){
-                    List<Integer> list = new ArrayList<Integer>();
-                    list.add(nums[left]);
-                    list.add(nums[i]);
-                    list.add(nums[right]);
-                    if(res.isEmpty() || !list.equals(res.get(res.size() - 1))){
-                        res.add(list);
-                    }
-                    break;
-                }
-            }
+        for(int i = 0; i < nums.length; i++){
+            int left = i + 1;
+            int right = nums.length - 1;
+            int num = nums[i];
 
-            if(Math.abs(nums[left]) > Math.abs(nums[right])){
-                // do{
-                left++;
-                // }
-                // while(left < nums.length - 1 && nums[left] == nums[left+1]);
-            }else{
-                // do{
-                right--;
-                // }while(right > 0 && nums[right] == nums[right - 1]);
+            if(i > 0 && nums[i] == nums[i - 1]) continue;
+
+            while(left < right){
+                int sum = num + nums[left] + nums[right];
+                if(sum > 0){
+                    right--;
+                }else if(sum < 0){
+                    left++;
+                }else{
+                    ArrayList<Integer> curAns = new ArrayList<Integer>();
+                    curAns.add(num);
+                    curAns.add(nums[left]);
+                    curAns.add(nums[right]);
+                    if(res.size() == 0 || !curAns.equals(res.get(res.size() - 1))){
+                        res.add(curAns);
+                    }
+                    left++;
+                }
             }
         }
 
