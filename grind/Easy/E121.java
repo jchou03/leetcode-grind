@@ -24,4 +24,26 @@ public class E121 {
         }
         return maxProf;
     }
+
+    /*
+    public int maxProfit(int[] prices) {
+        int maxProfit = 0;
+        int left = 0;
+        int right = 0;
+        while(right < prices.length){
+            if(left == right){
+                right++;
+            }else{
+                maxProfit = Math.max(maxProfit, prices[right] - prices[left]);
+                if(prices[left] > prices[right]){
+                    left++;
+                }else{
+                    right++;
+                }
+            }
+        }
+
+        return maxProfit;
+    }
+     */
 }
