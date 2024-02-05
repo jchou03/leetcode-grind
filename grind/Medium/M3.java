@@ -16,24 +16,40 @@ plan:
     - if new char exists in the old set, keep iterating left pointer until it is unique again
     - keep track of max substring length
 
-runtime: 42%, memory: 25%
+runtime: 70%, memory: 44%
 
 */
 
 public class M3 {
     public int lengthOfLongestSubstring(String s) {
-        int max = 0;
         int left = 0;
-        HashSet<Character> set =  new HashSet<Character>();
-        for(int right = 0; right < s.length(); right++ ){
-            char c = s.charAt(right);
-            while(set.contains(c)){
+        int right = 0;
+        HashSet<Character> set = new HashSet<Character>();
+        int maxLength = 0;
+        while(right < s.length()){
+            while(set.contains(s.charAt(right))){
                 set.remove(s.charAt(left));
                 left++;
             }
-            set.add(c);
-            max = Math.max(max, right - left + 1);
+            set.add(s.charAt(right));
+            right++;
+            maxLength = Math.max(maxLength, right - left);
         }
-        return max;
+        return maxLength;
     }
+    // public int lengthOfLongestSubstring(String s) {
+    //     int max = 0;
+    //     int left = 0;
+    //     HashSet<Character> set =  new HashSet<Character>();
+    //     for(int right = 0; right < s.length(); right++ ){
+    //         char c = s.charAt(right);
+    //         while(set.contains(c)){
+    //             set.remove(s.charAt(left));
+    //             left++;
+    //         }
+    //         set.add(c);
+    //         max = Math.max(max, right - left + 1);
+    //     }
+    //     return max;
+    // }
 }
