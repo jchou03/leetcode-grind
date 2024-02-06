@@ -1,4 +1,4 @@
-
+package grind.Medium;
 /* copy linked list with random pointers */
 
 import java.util.ArrayList;
