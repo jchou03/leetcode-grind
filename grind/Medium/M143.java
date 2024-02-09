@@ -2,6 +2,10 @@ package grind.Medium;
 
 import java.util.ArrayList;
 
+/*
+ * reorder a linked list 
+ */
+
 public class M143 {
     public void reorderList(ListNode head) {
         ArrayList<ListNode> arr = new ArrayList<ListNode>();
