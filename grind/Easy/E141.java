@@ -1,5 +1,7 @@
 package grind.Easy;
 
+import grind.ListNode;
+
 /*
 Check if LinkedList has a cycle
 using fast & slow travlers

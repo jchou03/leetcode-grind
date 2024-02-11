@@ -1,4 +1,5 @@
 package grind.Easy;
+
 import grind.ListNode;
 
 // Remove duplicates from sorted list
