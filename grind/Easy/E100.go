@@ -9,7 +9,7 @@ type TreeNode struct {
 /*
 Get the max depth of a binary search tree
 
-runtime: 67%, memory: 75%
+runtime: 100%, memory: 100%
 */
 
 func isSameTree(p *TreeNode, q *TreeNode) bool {
