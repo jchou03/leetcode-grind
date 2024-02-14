@@ -1,4 +1,3 @@
-package grind.Easy;
 import java.util.*;
 
 // two sum
