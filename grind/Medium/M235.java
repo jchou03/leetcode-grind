@@ -19,4 +19,32 @@ public class M235 {
             return root;
         }
     }
+
+    /*
+
+    worse solution: forgot it was BST
+     * public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        return helper(root, p, q, new HashSet<TreeNode>());
+    }
+
+    private TreeNode helper(TreeNode root, TreeNode p, TreeNode q, HashSet<TreeNode> set){
+        if(root != null){
+            HashSet<TreeNode> leftSet = new HashSet<TreeNode>();
+            TreeNode left = helper(root.left, p, q, leftSet);
+            if(left != null) return left;
+
+            HashSet<TreeNode> rightSet = new HashSet<TreeNode>();
+            TreeNode right = helper(root.right, p, q, rightSet);
+            if(right != null) return right;
+            
+            set.add(root);
+            set.addAll(leftSet);
+            set.addAll(rightSet);
+            if(set.contains(p) && set.contains(q)) return root;
+        }
+
+        return null;
+    }
+     * 
+     */
 }
