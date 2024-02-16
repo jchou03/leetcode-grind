@@ -45,6 +45,21 @@ public class M235 {
 
         return null;
     }
+
+
+    func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
+        // use bst property (if q.Val > root.Val > p.Val) return root otherwise recurse down other side
+        // runtime 53%, memory: 94%
+        if(root == nil){
+            return nil
+        }else if(p.Val < root.Val && q.Val < root.Val){
+            return lowestCommonAncestor(root.Left, p, q)
+        }else if(p.Val > root.Val && q.Val > root.Val){
+            return lowestCommonAncestor(root.Right, p, q)
+        }else{
+            return root;
+        }
+    }
      * 
      */
 }
