@@ -36,4 +36,31 @@ public class M102 {
         }
         return lvlOrder;
     }
+
+    /*
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        LinkedList<TreeNode> q1 = new LinkedList<TreeNode>();
+        LinkedList<TreeNode> q2 = new LinkedList<TreeNode>();
+        ArrayList<List<Integer>> res = new ArrayList<List<Integer>>();
+        
+        if(root == null){
+            return res;
+        }else{
+            q1.add(root);
+            while(!q1.isEmpty() || !q2.isEmpty()){
+                ArrayList<Integer> level = new ArrayList<Integer>();
+                while(!q1.isEmpty()){
+                    TreeNode n = q1.poll();
+                    if(n.left != null) q2.add(n.left);
+                    if(n.right != null) q2.add(n.right);
+                    level.add(n.val);
+                }
+                res.add(level);
+                q1 = q2;
+                q2 = new LinkedList<TreeNode>();
+            }
+        }
+        return res;
+    }
+     */
 }
