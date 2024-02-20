@@ -4,41 +4,46 @@ import java.util.*;
 public class M211 {
     class WordDictionary {
 
-        /* Implementation idea: use a Set to store all of the words, then when searching, iterate over the keys to find the */
+        HashMap<Character, WordDictionary> map;
     
-        Set<String> dictionary;
-
         public WordDictionary() {
-            dictionary = new TreeSet<String>();
+            map = new HashMap<Character, WordDictionary>();
         }
         
         public void addWord(String word) {
-            dictionary.add(word);
+            if(word.length() > 0){
+                char c = word.charAt(0);
+                if(map.containsKey(c)){
+                    map.get(c).addWord(word.substring(1));
+                }else{
+                    WordDictionary dict = new WordDictionary();
+                    dict.addWord(word.substring(1));
+                    map.put(c, dict);
+                }
+            }else{
+                // end of string character
+                map.put('-', null);
+            }
         }
         
         public boolean search(String word) {
-            Object[] dict = dictionary.toArray();
-            Arrays.sort(dict);
-            int index = 0;
-            while(index <= dict.length - 1){
-                if(wordEquals((String)dict[index], word)) return true;
-                index++;
-            }
-            return false;
-        }
-    
-        // first word is word in WordDictionary, second is the one that may contain wildcards
-        private boolean wordEquals(String w1, String w2){
-            if(w1.length() != w2.length()) {
-                return false;
-            }
-
-            for(int i = 0; i < w1.length(); i++){
-                if(!(w2.charAt(i) == '.') && w1.charAt(i) != w2.charAt(i)){
+            if(word.length() <= 0){
+                return map.containsKey('-');
+            }else{
+                char c = word.charAt(0);
+                if(c == '.'){
+                    for(Map.Entry<Character, WordDictionary> entry : map.entrySet()){
+                        if(entry.getKey() != '-' && entry.getValue().search(word.substring(1))){
+                            return true;
+                        }
+                    }
+                    return false;
+                }else if(map.containsKey(c)){
+                    return map.get(c).search(word.substring(1));
+                }else{
                     return false;
                 }
             }
-            return true;
         }
     }
     
