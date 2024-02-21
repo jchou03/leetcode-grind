@@ -20,6 +20,8 @@ public class M417 {
     - use DP to store previous calculations
         - if it is possible to reach a solution square, automatically pass
     - use dfs to explore possible paths for rainwater (if reaching the pacific ocean)
+
+    runtime: 98%, memory: 78%
     */
     
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
