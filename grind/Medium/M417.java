@@ -23,66 +23,50 @@ public class M417 {
     */
     
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
-        List<List<Integer>> res = new ArrayList<List<Integer>>();
-        HashSet<String> sols = new HashSet<String>();
-        for(int i = 0; i < heights.length; i++){
-            for(int j = 0; j < heights[0].length; j++){
-                int result = dfs(heights, i, j, new HashSet<String>(), sols);
-                if(result == 3){
-                    ArrayList<Integer> ls = new ArrayList<Integer>();
-                    ls.add(i);
-                    ls.add(j);
-                    res.add(ls);
+        int rows = heights.length, cols = heights[0].length;
+        boolean[][] pacific = new boolean[rows][cols];
+        boolean[][] atlantic = new boolean[rows][cols];
+
+        // pacific population
+        for(int i = 0; i < rows; i++){
+            dfs(heights, pacific, i, 0, heights[i][0]);
+        }
+        for(int i = 0; i < cols; i++){
+            dfs(heights, pacific, 0, i, heights[0][i]);
+        }
+
+        // atlantic population
+        for(int i = 0; i < rows; i++){
+            dfs(heights, atlantic, i, cols - 1, heights[i][cols - 1]);
+        }
+        for(int i = 0; i < cols; i++){
+            dfs(heights, atlantic, rows - 1, i, heights[rows - 1][i]);
+        }
+
+        ArrayList<List<Integer>> res = new ArrayList<List<Integer>>();
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                if(pacific[i][j] && atlantic[i][j]){
+                    ArrayList<Integer> sol = new ArrayList<Integer>();
+                    sol.add(i);
+                    sol.add(j);
+                    res.add(sol);
                 }
             }
         }
+
         return res;
     }
 
-    private int dfs(int[][] heights, int r, int c, Set<String> visited, Set<String> sols){
-        boolean pacific = false;
-        boolean atlantic = false;
-        // return 0 if it is an invalid path, return 1 if it can touch pacific ocean, return 2 if it can touch atlantic, 3 if both
-        if((r == 0 && c == heights[0].length - 1) || (r == heights.length - 1 && c == 0) || sols.contains(r+","+c)){
-            sols.add(r+","+c);
-            return 3;
-        }
-        
-        if(r == 0 || c == 0){
-            pacific = true;
-        }
-        if(r == heights.length - 1 || c == heights[0].length - 1){
-            atlantic = true;
-        }
-
-        visited.add(r+","+c);
-
+    private void dfs(int[][] heights, boolean[][] visited, int r, int c, int prevHeight){
+        int rows = heights.length, cols = heights[0].length;
+        // this cell has been visited or out of bounds
+        if(r < 0 || r >= rows || c < 0 || c >= cols || visited[r][c] || heights[r][c] < prevHeight) return;
         int[] rm = {0, 0, 1, -1};
         int[] cm = {1, -1, 0, 0};
+        visited[r][c] = true;
         for(int i = 0; i < 4; i++){
-            int newR = r + rm[i];
-            int newC = c + cm[i];
-            if(newR >= 0 && newR < heights.length && newC >= 0 && newC < heights[0].length && heights[newR][newC] <= heights[r][c] && !visited.contains(newR+","+newC)){
-                int res = dfs(heights, newR, newC, visited, sols);
-                if(res == 3){
-                    sols.add(r+","+c);
-                    return 3;
-                }else if(res == 1){
-                    pacific = true;
-                }else if(res == 2){
-                    atlantic = true;
-                }
-            }
-        }
-        if(pacific && atlantic){
-            sols.add(r+","+c);
-            return 3;
-        }else if(pacific){
-            return 1;
-        }else if(atlantic){
-            return 2;
-        }else{
-            return 0;
+            dfs(heights, visited, r + rm[i], c + cm[i], heights[r][c]);
         }
     }
 }
