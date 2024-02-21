@@ -20,15 +20,14 @@ public class M417 {
     - use DP to store previous calculations
         - if it is possible to reach a solution square, automatically pass
     - use dfs to explore possible paths for rainwater (if reaching the pacific ocean)
-
-    runtime: 5%, memory: 7%
     */
     
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
+        HashSet<String> sols = new HashSet<String>();
         for(int i = 0; i < heights.length; i++){
             for(int j = 0; j < heights[0].length; j++){
-                int result = dfs(heights, i, j, new HashSet<String>());
+                int result = dfs(heights, i, j, new HashSet<String>(), sols);
                 if(result == 3){
                     ArrayList<Integer> ls = new ArrayList<Integer>();
                     ls.add(i);
@@ -40,11 +39,12 @@ public class M417 {
         return res;
     }
 
-    private int dfs(int[][] heights, int r, int c, Set<String> visited){
+    private int dfs(int[][] heights, int r, int c, Set<String> visited, Set<String> sols){
         boolean pacific = false;
         boolean atlantic = false;
         // return 0 if it is an invalid path, return 1 if it can touch pacific ocean, return 2 if it can touch atlantic, 3 if both
-        if((r == 0 && c == heights[0].length - 1) || (r == heights.length - 1 && c == 0)){
+        if((r == 0 && c == heights[0].length - 1) || (r == heights.length - 1 && c == 0) || sols.contains(r+","+c)){
+            sols.add(r+","+c);
             return 3;
         }
         
@@ -63,8 +63,9 @@ public class M417 {
             int newR = r + rm[i];
             int newC = c + cm[i];
             if(newR >= 0 && newR < heights.length && newC >= 0 && newC < heights[0].length && heights[newR][newC] <= heights[r][c] && !visited.contains(newR+","+newC)){
-                int res = dfs(heights, newR, newC, visited);
+                int res = dfs(heights, newR, newC, visited, sols);
                 if(res == 3){
+                    sols.add(r+","+c);
                     return 3;
                 }else if(res == 1){
                     pacific = true;
@@ -74,6 +75,7 @@ public class M417 {
             }
         }
         if(pacific && atlantic){
+            sols.add(r+","+c);
             return 3;
         }else if(pacific){
             return 1;
